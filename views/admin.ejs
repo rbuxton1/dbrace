@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Admin tools</title>
+    <% if(user != true){ %>
+      <meta http-equiv="Refresh" content="0; url=/login" />
+    <% } %>
+  </head>
+  <body>
+    <div class="w3-container w3-center" width="100%">
+
+      <div class="w3-xxlarge w3-center"> - Add points - </div>
+      <table class="w3-table-all">
+        <th> <center> Name </center> </th> <th> <center> Points </center> </th> <th> <center> Points </center> </th>
+        <% members.forEach(function(member){ %>
+          <tr>
+            <td>
+              <center>
+                <p class="w3-medium"> <%= member.name %> </p>
+              </center>
+            </td>
+            <td>
+              <p class="w3-medium"> <%= member.points %> </p>
+            </td>
+            <td>
+              <form action="/admin/addpoints" method="post" class="w3-container">
+                <input type="hidden" name="id" value="<%= member.id %>">
+                <input class="w3-input" type="number" name="points" placeholder="Points to add" required>
+                <input type="submit" class="w3-btn w3-blue" value="Add" name="submit">
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
+      <hr>
+
+      <div class="w3-xxlarge w3-center"> - Add user - </div>
+      <form action="/admin/adduser" method="post" class="w3-container">
+        <input class="w3-input" type="text" name="name" placeholder="Name" required>
+        <input class="w3-input" type="email" name="email" placeholder="darcy@dog.com" required>
+        <input type="submit" class="w3-btn w3-green" value="Submit" name="submit">
+      </form>
+      <hr>
+      <a href="/logout">Logout</a>
+
+    </div>
+  </body>
+</html>

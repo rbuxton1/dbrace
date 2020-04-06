@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <title> Dragon Boat Races </title>
+  </head>
+  <body>
+    <div class="w3-container w3-center" width="100%">
+
+      <div class="w3-xxlarge w3-center"> - Top 5 - </div>
+      <canvas id="top" style="width:75%;"></canvas>
+      <script type="text/javascript">
+        var ctx = document.getElementById('top').getContext('2d');
+        var myBarChart = new Chart(ctx, {
+          type: 'horizontalBar',
+          data: {
+            labels: [<%-members.slice(0, 5).map(function(a) {return '"' + a.name +'"';})%>],
+            datasets: [{
+              label: '# of Points',
+              data: [<%-members.slice(0, 5).map(function(a) {return a.points;})%>],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              xAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        });
+      </script>
+
+      <hr>
+      <div class="w3-xxlarge w3-center"> - All - </div>
+      <table class="w3-table-all">
+        <th> <center> Name </center> </th> <th> <center> Points </center> </th>
+        <% members.forEach(function(member){ %>
+          <tr>
+            <td>
+              <center>
+                <p class="w3-medium"> <%= member.name %> </p>
+              </center>
+            </td>
+            <td>
+              <p class="w3-medium"> <%= member.points %> </p>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
+
+      <hr>
+      <a href="/login"> Admin features </a> <br>
+      <a href="https://github.com/rbuxton1/dbrace" class="w3-small"> << Ryan Buxton 2020 >> </p>
+
+    </div>
+  </body>
+</html>
