@@ -1,0 +1,42 @@
+
+version: '3.1'
+
+services:
+
+  dbrace:
+    image: dbrace
+    restart: unless-stopped
+    container_name: dbrace
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:3000
+    environment:
+      DB: dbrace-db
+      DB_PASS: dbpass
+      PASSWORD: 1234
+
+  dbrace-db:
+    image: mysql
+    restart: unless-stopped
+    container_name: dbrace-db
+    volumes:
+      - ./sql-scripts:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: dbrace
+      MYSQL_USER: dbraceUser
+      MYSQL_PASSWORD: dbpass
+      MYSQL_ROOT_PASSWORD: trickerpass
+    command: --default-authentication-plugin=mysql_native_password
+
+  dbrace-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: dbrace-phpmyadmin
+    links:
+      - dbrace-db
+    environment:
+      PMA_HOST: dbrace-db
+      PMA_PORT: 3306
+    ports:
+      - 81:80
