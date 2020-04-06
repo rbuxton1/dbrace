@@ -8,17 +8,18 @@
   <body>
     <div class="w3-container w3-center" width="100%">
 
-      <div class="w3-xxlarge w3-center"> - Top 5 - </div>
+      <div class="w3-xxlarge w3-center"> 🐉 Graph View 🐉 </div>
       <canvas id="top" style="width:75%;"></canvas>
       <script type="text/javascript">
         var ctx = document.getElementById('top').getContext('2d');
         var myBarChart = new Chart(ctx, {
           type: 'horizontalBar',
           data: {
-            labels: [<%-members.slice(0, 5).map(function(a) {return '"' + a.name +'"';})%>],
+            labels: [<%-members.map(function(a) {return '"' + a.name +'"';})%>],
             datasets: [{
               label: '# of Points',
-              data: [<%-members.slice(0, 5).map(function(a) {return a.points;})%>],
+              data: [<%-members.map(function(a) {return a.points;})%>],
+              backgroundColor: [<%-members.map(function(a) {return '"' + a.color + '"';})%>],
               borderWidth: 1
             }]
           },
@@ -35,7 +36,7 @@
       </script>
 
       <hr>
-      <div class="w3-xxlarge w3-center"> - All - </div>
+      <div class="w3-xxlarge w3-center"> 🐉 Table View 🐉 </div>
       <table class="w3-table-all">
         <th> <center> Name </center> </th> <th> <center> Points </center> </th>
         <% members.forEach(function(member){ %>
@@ -46,7 +47,9 @@
               </center>
             </td>
             <td>
-              <p class="w3-medium"> <%= member.points %> </p>
+              <center>
+                <p class="w3-medium"> <%= member.points %> </p>
+              </center>
             </td>
           </tr>
         <% }) %>

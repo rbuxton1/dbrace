@@ -21,7 +21,7 @@ app.use(express.static("public"));
 app.use(session({secret: "i hate js"}));
 
 app.get("/", function(req, res){
-  db.query("SELECT name, points FROM `member` ORDER BY points DESC", function(err, sqlRes){
+  db.query("SELECT * FROM `member` ORDER BY points DESC", function(err, sqlRes){
     res.render("index", {members: sqlRes});
   });
 });
@@ -49,7 +49,7 @@ app.post("/admin/addpoints", function(req, res){
   });
 });
 app.post("/admin/adduser", function(req, res){
-  db.query("INSERT INTO `member`(`id`, `name`, `email`, `points`, `last`) VALUES (NULL, ?, ?, 0,DATE(NOW()))", [req.body.name, req.body.email], function(err, sqlRes){
+  db.query("INSERT INTO `member`(`id`, `name`, `email`, `points`, `color`, `last`) VALUES (NULL, ?, ?, 0, ?, DATE(NOW()))", [req.body.name, req.body.email, req.body.color], function(err, sqlRes){
     res.redirect("/admin");
   });
 });
